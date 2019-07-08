@@ -40,9 +40,9 @@ if [[ $? -ne 0 ]]; then
     exit $?
 fi
 
-rm -f bin
+rm -rf bin
 
-rm -f log
+rm -rf log
 
 rm -f public/*.html
 rm -f public/*.png
