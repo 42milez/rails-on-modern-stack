@@ -7,12 +7,14 @@ This repository provides an environment for developing web application with Ruby
 
 ```shell
 git checkout demo origin/demo
-be yarn run build:dev
+bundle exec yarn run build:dev
 docker-compose up -d
 ./script/migrate.sh
 ```
 
-The demo application is based on [this article](https://qiita.com/geek_shanshan/items/8f348734d95d9ece9576).
+After the migration, the demo application is served at `localhost:8888`.
+
+Note: The application is based on [this article](https://qiita.com/geek_shanshan/items/8f348734d95d9ece9576).
 
 
 ## Environment
