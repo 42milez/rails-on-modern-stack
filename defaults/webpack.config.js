@@ -19,7 +19,8 @@ module.exports = (env, argv) => {
       application: [
         './frontend/init/application.js',
         './frontend/init/application.scss'
-      ]
+      ],
+      ...entries
     },
     output: {
       filename: 'javascripts/[name]-[hash].js',
