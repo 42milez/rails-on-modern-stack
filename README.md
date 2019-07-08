@@ -3,6 +3,18 @@
 This repository provides an environment for developing web application with Ruby on Rails on modern software stack.
 
 
+## Quick start
+
+```shell
+git checkout demo origin/demo
+be yarn run build:dev
+docker-compose up -d
+./script/migrate.sh
+```
+
+The demo application is based on [this article](https://qiita.com/geek_shanshan/items/8f348734d95d9ece9576).
+
+
 ## Environment
 
 - Nginx: 1.17.1
@@ -11,7 +23,7 @@ This repository provides an environment for developing web application with Ruby
 - Ruby on Rails: 5.2.3
 
 
-## Initialize project
+## Initializing project
 
 `./script/init.sh`
 
@@ -26,3 +38,4 @@ This repository provides an environment for developing web application with Ruby
 
 - Build containers: `./script/build.sh`
 - Migration: `./script/migrate.sh`
+
