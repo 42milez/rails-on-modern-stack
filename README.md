@@ -23,7 +23,7 @@ The demo application is based on [this article](https://qiita.com/geek_shanshan/
 - Ruby on Rails: 5.2.3
 
 
-## Initialize project
+## Initializing project
 
 `./script/init.sh`
 
