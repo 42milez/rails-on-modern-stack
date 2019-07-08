@@ -1,0 +1,61 @@
+version: '3'
+services:
+  app:
+    build:
+      context: '.'
+      dockerfile: './docker/Dockerfile.Rails'
+    command: 'bundle exec foreman start -p 3000'
+    container_name: 'app'
+    depends_on:
+      - 'db'
+    image: 'roms-app:latest'
+    links:
+      - 'db'
+    ports:
+      - '3000:3000'
+      - '3035:3035'
+    stdin_open: true
+    tty: true
+    volumes:
+      - './app:/var/app/app'
+      - './bin:/var/app/bin'
+      - './config:/var/app/config'
+      - './db:/var/app/db'
+      - './frontend:/var/app/frontend'
+      - './lib:/var/app/lib'
+      - './public:/var/app/public'
+      - './storage:/var/app/storage'
+      - './test:/var/app/test'
+      # https://github.com/Shopify/bootsnap/issues/177
+      # - './tmp:/var/app/tmp'
+      - './config.ru:/var/app/config.ru'
+      - './Procfile:/var/app/Procfile'
+      - './Rakefile:/var/app/Rakefile'
+      - './webpack.config.js:/var/app/webpack.config.js'
+  db:
+    build:
+      context: '.'
+      dockerfile: './docker/Dockerfile.PostgreSQL'
+    command: 'postgres -c config_file="/etc/postgresql.conf"'
+    container_name: 'db'
+    image: 'roms-db:latest'
+    ports:
+      - '5432:5432'
+    volumes:
+      - 'pgdata:/var/lib/postgresql/data'
+      - './docker/conf/postgresql/postgresql.conf:/etc/postgresql.conf'
+  web:
+    build:
+      context: '.'
+      dockerfile: './docker/Dockerfile.Nginx'
+    container_name: 'web'
+    depends_on:
+      - 'app'
+    image: 'roms-web:latest'
+    links:
+      - 'app'
+    ports:
+      - '8888:80'
+volumes:
+  pgdata:
+    driver: 'local'
