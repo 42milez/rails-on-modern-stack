@@ -6,8 +6,8 @@ This repository provides an environment for developing web application with Ruby
 ## Quick start
 
 ```shell
-git checkout demo origin/demo
-bundle exec yarn run build:dev
+git checkout -b demo origin/demo
+yarn run build:dev
 docker-compose up -d
 ./script/migrate.sh
 ```
