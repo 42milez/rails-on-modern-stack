@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-source ./utils.sh
+SCRIPT_DIR=$(cd "$(dirname "${0}")" || exit; pwd)
+
+# shellcheck source=./utils.sh
+. "${SCRIPT_DIR}/utils.sh"
 
 #  Install front-end packages
 # --------------------------------------------------
