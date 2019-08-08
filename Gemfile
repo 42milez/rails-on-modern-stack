@@ -1,15 +1,19 @@
-# frozen_string_literal: true
-
 source 'https://rubygems.org'
-
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.3'
 
-gem 'bootsnap', '>= 1.1.0', require: false
-gem 'jbuilder', '~> 2.5'
+gem 'rails', '~> 6.0.0.rc2'
+gem 'railties', '~> 6.0.0.rc2'
+gem 'actionpack', '~> 6.0.0.rc2'
+gem 'activerecord', '~> 6.0.0.rc2'
+gem 'activesupport', '~> 6.0.0.rc2'
+
+gem 'bootsnap', '>= 1.4.2', require: false
+gem 'jbuilder', '~> 2.7'
 gem 'pg', '>= 0.18', '< 2.0'
-gem 'rails', '~> 5.2.3'
+gem 'turbolinks', '~> 5'
+gem 'webpacker', '~> 4.0'
 gem 'unicorn', '~> 5.5', '>= 5.5.1'
 
 group :development, :test do
@@ -25,7 +29,6 @@ group :development do
   gem 'binding_of_caller', '~> 0.8.0'
   gem 'bullet', '~> 6.0', '>= 6.0.1'
   gem 'factory_bot_rails', '~> 5.0', '>= 5.0.2'
-  gem 'foreman', '~> 0.85.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'pry-byebug', '~> 3.7'
   gem 'pry-rails', '~> 0.3.9'
