@@ -10,7 +10,7 @@ WORK_DIR=$(pwd)
 # --------------------------------------------------
 
 if [[ $(type yarn >/dev/null 2>&1) ]]; then
-  echo "error: yarn not found"
+  echo_fail "yarn not found"
   exit 1
 else
   cmd="yarn install"
@@ -21,7 +21,7 @@ fi
 # --------------------------------------------------
 
 if [[ $(type bundle >/dev/null 2>&1) ]]; then
-  echo "error: bundler not found"
+  echo_fail "bundler not found"
   exit 1
 else
   cmd="bundle install -j4 --path=vendor/bundle --binstubs=vendor/bin"
@@ -32,7 +32,7 @@ fi
 # --------------------------------------------------
 
 if [[ -e "${WORK_DIR}/.initialized" ]]; then
-  echo "error: already initialized"
+  echo_notice "already initialized"
   exit 1
 else
   cmd="bundle exec rails new . --database=postgresql
