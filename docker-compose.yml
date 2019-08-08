@@ -3,12 +3,12 @@ services:
   app:
     build:
       context: '.'
-      dockerfile: './docker/Dockerfile.Rails'
+      dockerfile: './docker/rails/Dockerfile'
     command: 'bundle exec foreman start -p 3000'
-    container_name: 'app'
+    container_name: 'roms-app'
     depends_on:
       - 'db'
-    image: 'roms-app:latest'
+    image: 'roms-app'
     links:
       - 'db'
     ports:
@@ -35,23 +35,23 @@ services:
   db:
     build:
       context: '.'
-      dockerfile: './docker/Dockerfile.PostgreSQL'
+      dockerfile: './docker/postgresql/Dockerfile'
     command: 'postgres -c config_file="/etc/postgresql.conf"'
-    container_name: 'db'
-    image: 'roms-db:latest'
+    container_name: 'roms-db'
+    image: 'roms-db'
     ports:
       - '5432:5432'
     volumes:
       - 'pgdata:/var/lib/postgresql/data'
-      - './docker/conf/postgresql/postgresql.conf:/etc/postgresql.conf'
+      - './docker/postgresql/conf/postgresql.conf:/etc/postgresql.conf'
   web:
     build:
       context: '.'
-      dockerfile: './docker/Dockerfile.Nginx'
-    container_name: 'web'
+      dockerfile: './docker/nginx/Dockerfile'
+    container_name: 'roms-web'
     depends_on:
       - 'app'
-    image: 'roms-web:latest'
+    image: 'roms-web'
     links:
       - 'app'
     ports:
