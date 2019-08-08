@@ -1,79 +1,48 @@
 #!/usr/bin/env bash
 
-#  Ensure Yarn exists
-# --------------------------------------------------
+source ./utils.sh
 
-yarn -v > /dev/null 2>&1
-
-if [[ $? -eq 127 ]]; then
-  echo 'error: yarn not found'
-  exit $?
-fi
+WORK_DIR=$(pwd)
 
 #  Install front-end packages
 # --------------------------------------------------
 
-yarn install
+if [[ $(type yarn >/dev/null 2>&1) ]]; then
+  echo "error: yarn not found"
+  exit 1
+else
+  cmd="yarn install"
+  exec_command "${cmd}"
+fi
 
 #  Install gems
 # --------------------------------------------------
 
-bundle install -j4 --path=vendor/bundle --binstubs=vendor/bin
+if [[ $(type bundle >/dev/null 2>&1) ]]; then
+  echo "error: bundler not found"
+  exit 1
+else
+  cmd="bundle install -j4 --path=vendor/bundle --binstubs=vendor/bin"
+  exec_command "${cmd}"
+fi
 
 #  Initialize project
 # --------------------------------------------------
 
-bundle exec rails new . --database=postgresql \
-                        --skip \
-                        --skip-bundle \
-                        --skip-coffee \
-                        --skip-gemfile \
-                        --skip-git \
-                        --skip-javascript \
-                        --skip-puma \
-                        --skip-sprockets \
-                        --skip-turbolinks \
-                        --skip-yarn
-
-if [[ $? -ne 0 ]]; then
-    echo 'error: initialization failed'
-    exit $?
+if [[ -e "${WORK_DIR}/.initialized" ]]; then
+  echo "error: already initialized"
+  exit 1
+else
+  cmd="bundle exec rails new . --database=postgresql
+                               --skip
+                               --skip-bundle
+                               --skip-coffee
+                               --skip-gemfile
+                               --skip-git
+                               --skip-javascript
+                               --skip-puma
+                               --skip-sprockets"
+  exec_command "${cmd}"
+  date > .initialized
+  rm -rf bin
 fi
-
-rm -rf bin
-
-rm -rf log
-
-rm -f public/*.html
-rm -f public/*.png
-rm -f public/favicon.ico
-rm -f public/robots.txt
-
-touch public/.keep
-
-cp defaults/app/helpers/*.rb app/helpers/
-
-cp defaults/app/views/layouts/*.html.erb app/views/layouts/
-
-cp defaults/config/environments/development.rb config/environments/
-
-cp defaults/config/initializers/*.rb config/initializers/
-
-cp defaults/config/database.yml config/
-
-cp defaults/config/unicorn.rb config/
-
-rm -rf app/assets
-
-mkdir frontend \
-      frontend/components \
-      frontend/images \
-      frontend/init \
-      frontend/pages
-
-touch frontend/components/.keep \
-      frontend/images/.keep \
-      frontend/init/.keep \
-      frontend/pages/.keep
-
-cp defaults/webpack.config.js .
