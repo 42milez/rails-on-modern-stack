@@ -4,7 +4,6 @@ services:
     build:
       context: '.'
       dockerfile: './docker/rails/Dockerfile'
-    command: 'bundle exec foreman start -p 3000'
     container_name: 'roms-app'
     depends_on:
       - 'db'
@@ -13,7 +12,6 @@ services:
       - 'db'
     ports:
       - '3000:3000'
-      - '3035:3035'
     stdin_open: true
     tty: true
     volumes:
@@ -21,7 +19,6 @@ services:
       - './bin:/var/app/bin'
       - './config:/var/app/config'
       - './db:/var/app/db'
-      - './frontend:/var/app/frontend'
       - './lib:/var/app/lib'
       - './public:/var/app/public'
       - './storage:/var/app/storage'
@@ -29,9 +26,7 @@ services:
       # https://github.com/Shopify/bootsnap/issues/177
       # - './tmp:/var/app/tmp'
       - './config.ru:/var/app/config.ru'
-      - './Procfile:/var/app/Procfile'
       - './Rakefile:/var/app/Rakefile'
-      - './webpack.config.js:/var/app/webpack.config.js'
   db:
     build:
       context: '.'
